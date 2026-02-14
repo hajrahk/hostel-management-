@@ -45,7 +45,7 @@ python manage.py runserver
 ## Default Admin Credentials
 
 - Username: hajra
-- Password: msa123
+- Password: hajra123
 
 ## Usage
 
