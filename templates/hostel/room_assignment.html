@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block title %}Room Assignment - Hostel Management System{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'room_list' %}">Rooms</a></li>
+                <li class="breadcrumb-item active">Room Assignment</li>
+            </ol>
+        </nav>
+        <h2 class="mb-4"><i class="fas fa-bed me-2"></i>Room Assignment</h2>
+    </div>
+</div>
+
+<div class="row justify-content-center mb-4">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Request Room Assignment</h5>
+            </div>
+            <div class="card-body">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <div class="d-grid gap-2 mt-3">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i>Submit Request
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="alert alert-info">
+            <h5><i class="fas fa-info-circle me-2"></i>Room Assignment Information</h5>
+            <p>Please note the following:</p>
+            <ul>
+                <li>Room assignments are subject to availability.</li>
+                <li>If you already have a room assigned, requesting a new room will release your current room.</li>
+                <li>You can only be assigned to one room at a time.</li>
+                <li>If you have any special requirements, please contact the hostel administration.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="d-flex justify-content-between">
+            <a href="{% url 'room_list' %}" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Room List
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %} 

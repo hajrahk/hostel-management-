@@ -1,0 +1,266 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block title %}Admin Dashboard - Hostel Management System{% endblock %}
+
+{% block extra_css %}
+<style>
+    .admin-page-title { color: #1B263B; font-weight: 700; border-bottom: 3px solid #4A69BD; padding-bottom: 0.5rem; display: inline-block; }
+    .admin-stat-card { border: 1px solid #C0C0C0; transition: transform 0.2s, box-shadow 0.2s; }
+    .admin-stat-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(27, 38, 59, 0.12); }
+    .admin-stat-card .card-footer { border-top: 1px solid #C0C0C0; background: #FAFAFA !important; }
+    .quick-actions .card-header { background: #1B263B; color: white; }
+    .admin-section-card .card-header { background: #1B263B; color: white; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="admin-page-title mb-4"><i class="fas fa-tachometer-alt me-2"></i>Admin Dashboard</h2>
+    </div>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row mb-4">
+    <div class="col-md-3 mb-4">
+        <div class="card h-100 bg-primary text-white admin-stat-card">
+            <div class="card-body text-center">
+                <div class="stat-icon text-white">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h2 class="display-4 fw-bold">{{ student_count }}</h2>
+                <p class="mb-0">Students</p>
+            </div>
+            <div class="card-footer bg-white">
+                <a href="{% url 'admin_user_list' %}" class="btn btn-sm btn-outline-primary w-100">
+                    <i class="fas fa-list me-1"></i>Manage Students
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-4">
+        <div class="card h-100 bg-success text-white admin-stat-card">
+            <div class="card-body text-center">
+                <div class="stat-icon text-white">
+                    <i class="fas fa-door-open"></i>
+                </div>
+                <h2 class="display-4 fw-bold">{{ room_count }}</h2>
+                <p class="mb-0">Rooms</p>
+            </div>
+            <div class="card-footer bg-white">
+                <a href="{% url 'admin_room_list' %}" class="btn btn-sm btn-outline-success w-100">
+                    <i class="fas fa-list me-1"></i>Manage Rooms
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-4">
+        <div class="card h-100 bg-info text-white admin-stat-card">
+            <div class="card-body text-center">
+                <div class="stat-icon text-white">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2 class="display-4 fw-bold">{{ available_rooms }}</h2>
+                <p class="mb-0">Available Rooms</p>
+            </div>
+            <div class="card-footer bg-white">
+                <a href="{% url 'admin_room_create' %}" class="btn btn-sm btn-outline-info w-100">
+                    <i class="fas fa-plus me-1"></i>Add New Room
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-4">
+        <div class="card h-100 bg-warning text-white admin-stat-card">
+            <div class="card-body text-center">
+                <div class="stat-icon text-white">
+                    <i class="fas fa-bullhorn"></i>
+                </div>
+                <h2 class="display-4 fw-bold">{{ announcement_count }}</h2>
+                <p class="mb-0">Announcements</p>
+            </div>
+            <div class="card-footer bg-white">
+                <a href="{% url 'admin_announcement_list' %}" class="btn btn-sm btn-outline-warning w-100">
+                    <i class="fas fa-list me-1"></i>Manage Announcements
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card quick-actions">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-bolt me-2"></i>Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <a href="{% url 'admin_user_list' %}" class="btn btn-outline-primary w-100">
+                            <i class="fas fa-user-plus me-2"></i>Manage Users
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <a href="{% url 'admin_room_create' %}" class="btn btn-outline-success w-100">
+                            <i class="fas fa-plus-circle me-2"></i>Add New Room
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <a href="{% url 'announcement_create' %}" class="btn btn-outline-warning w-100">
+                            <i class="fas fa-bullhorn me-2"></i>Post Announcement
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <a href="{% url 'attendance_bulk' %}" class="btn btn-outline-info w-100">
+                            <i class="fas fa-clipboard-check me-2"></i>Mark Attendance
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Announcements -->
+<div class="row mb-4">
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fas fa-bullhorn me-2"></i>Recent Announcements</h5>
+                <a href="{% url 'announcement_create' %}" class="btn btn-sm btn-primary">
+                    <i class="fas fa-plus me-1"></i>New
+                </a>
+            </div>
+            <div class="card-body">
+                {% if announcements %}
+                    {% for announcement in announcements %}
+                        <div class="announcement-card p-3 mb-3 bg-light rounded">
+                            <h6 class="mb-1">{{ announcement.title }}</h6>
+                            <p class="mb-1 small">{{ announcement.content|truncatewords:15 }}</p>
+                            <small class="text-muted">{{ announcement.date_posted|date:"M d, Y" }}</small>
+                        </div>
+                    {% endfor %}
+                    <div class="text-center mt-2">
+                        <a href="{% url 'admin_announcement_list' %}" class="btn btn-sm btn-outline-primary">View All</a>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        <p class="mb-0">No announcements available.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Recent Attendance -->
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fas fa-clipboard-check me-2"></i>Recent Attendance</h5>
+                <a href="{% url 'attendance_bulk' %}" class="btn btn-sm btn-primary">
+                    <i class="fas fa-plus me-1"></i>Mark
+                </a>
+            </div>
+            <div class="card-body">
+                {% if recent_attendance %}
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for record in recent_attendance %}
+                                    <tr>
+                                        <td>{{ record.student.user.first_name }} {{ record.student.user.last_name }}</td>
+                                        <td>{{ record.date|date:"M d, Y" }}</td>
+                                        <td>
+                                            {% if record.is_present %}
+                                                <span class="badge bg-success">Present</span>
+                                            {% else %}
+                                                <span class="badge bg-danger">Absent</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        <p class="mb-0">No attendance records available.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Admin Links -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card admin-section-card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-cogs me-2"></i>Administration</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-users me-2"></i>User Management</h5>
+                                <p class="card-text">Manage user accounts and permissions.</p>
+                                <a href="{% url 'admin_user_list' %}" class="btn btn-sm btn-primary">
+                                    Manage Users
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-bed me-2"></i>Room Management</h5>
+                                <p class="card-text">Manage hostel rooms and assignments.</p>
+                                <a href="{% url 'admin_room_list' %}" class="btn btn-sm btn-primary">
+                                    Manage Rooms
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-clipboard-list me-2"></i>Attendance</h5>
+                                <p class="card-text">View and manage student attendance records.</p>
+                                <a href="{% url 'admin_attendance_list' %}" class="btn btn-sm btn-primary">
+                                    Manage Attendance
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-bullhorn me-2"></i>Announcements</h5>
+                                <p class="card-text">Create and manage hostel announcements.</p>
+                                <a href="{% url 'admin_announcement_list' %}" class="btn btn-sm btn-primary">
+                                    Manage Announcements
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

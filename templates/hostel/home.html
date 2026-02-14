@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Welcome to Hostel Management System{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #1B263B, #4A69BD);
+        color: white;
+        padding: 80px 0;
+        border-radius: 15px;
+        margin-bottom: 40px;
+        box-shadow: 0 10px 30px rgba(27, 38, 59, 0.2);
+        border: 1px solid #C0C0C0;
+    }
+    
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    
+    .hero-subtitle {
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .feature-card {
+        transition: all 0.3s ease;
+        background-color: #FFFFFF;
+        border: 1px solid #C0C0C0;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(27, 38, 59, 0.08);
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(27, 38, 59, 0.15);
+        border-color: #4A69BD;
+    }
+    
+    .feature-icon {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        color: #4A69BD;
+    }
+    
+    .feature-card .card-header {
+        background-color: #1B263B;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        padding: 15px;
+    }
+    
+    .feature-card .card-body {
+        padding: 30px;
+    }
+    
+    .feature-card .card-title {
+        color: #1B263B;
+    }
+    
+    .feature-card .card-text {
+        color: #5A6C7D;
+    }
+    
+    .logo-img {
+        max-height: 80px;
+        margin-bottom: 20px;
+        filter: brightness(0) invert(1);
+    }
+    
+    .lead.text-muted {
+        color: #5A6C7D !important;
+    }
+    
+    .btn-light {
+        background-color: #FFFFFF;
+        border: 1px solid #C0C0C0;
+        color: #1B263B;
+    }
+    
+    .btn-light:hover {
+        background-color: #C0C0C0;
+        border-color: #C0C0C0;
+        color: #1B263B;
+    }
+    
+    .hero-illustration-wrapper {
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 16px;
+        padding: 1.5rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        display: inline-block;
+    }
+    
+    .hero-illustration {
+        max-height: 280px;
+        width: auto;
+        display: block;
+    }
+    
+    .section-heading {
+        color: #1B263B;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+    }
+    
+    .features-divider {
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #1B263B, #4A69BD);
+        margin: 0 auto 1rem;
+        border-radius: 2px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section my-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="text-center text-lg-start">
+                    <img src="https://img.icons8.com/fluency/96/000000/university.png" alt="Hostel Logo" class="logo-img">
+                    <h1 class="hero-title">Hostel Management System</h1>
+                    <p class="hero-subtitle">Streamlining hostel operations with modern technology</p>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'dashboard' %}" class="btn btn-light btn-lg px-5 py-3 fw-bold">
+                                <i class="fas fa-tachometer-alt me-2"></i>Go to Dashboard
+                            </a>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="btn btn-light btn-lg px-5 py-3 fw-bold">
+                                <i class="fas fa-sign-in-alt me-2"></i>Login
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 d-none d-lg-block text-center">
+                <div class="hero-illustration-wrapper">
+                    <img src="{% static 'images/hostel.svg' %}?v=2" alt="Hostel" class="hero-illustration img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="container">
+    <div class="row mb-5">
+        <div class="col-12 text-center mb-5">
+            <div class="features-divider"></div>
+            <h2 class="section-heading display-5 mb-2">Our Features</h2>
+            <p class="lead text-muted">Everything you need to manage your hostel efficiently</p>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="feature-card card h-100">
+                <div class="card-header">
+                    Room Management
+                </div>
+                <div class="card-body text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-bed"></i>
+                    </div>
+                    <h5 class="card-title fw-bold mb-3">Smart Room Allocation</h5>
+                    <p class="card-text">Efficiently manage room assignments and track availability across the hostel with our intuitive interface.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="feature-card card h-100">
+                <div class="card-header">
+                    Announcements
+                </div>
+                <div class="card-body text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h5 class="card-title fw-bold mb-3">Instant Communication</h5>
+                    <p class="card-text">Keep everyone informed with important announcements and updates through our centralized notification system.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="feature-card card h-100">
+                <div class="card-header">
+                    Attendance Tracking
+                </div>
+                <div class="card-body text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <h5 class="card-title fw-bold mb-3">Accurate Records</h5>
+                    <p class="card-text">Monitor student presence and maintain accurate attendance records with our easy-to-use attendance system.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

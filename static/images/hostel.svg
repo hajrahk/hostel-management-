@@ -1,0 +1,78 @@
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <defs>
+    <filter id="buildingShadow" x="-20%" y="-10%" width="140%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#183B4E" flood-opacity="0.22"/>
+    </filter>
+    <!-- Warm ivory/cream walls - clearly not blue -->
+    <linearGradient id="wallGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#F5F0E2"/>
+      <stop offset="50%" style="stop-color:#F3F3E0"/>
+      <stop offset="100%" style="stop-color:#E8E4D5"/>
+    </linearGradient>
+    <linearGradient id="roofGradient" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" style="stop-color:#2E5F9E"/>
+      <stop offset="100%" style="stop-color:#27548A"/>
+    </linearGradient>
+    <linearGradient id="roofShadow" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" style="stop-color:#183B4E;stop-opacity:0.4"/>
+      <stop offset="100%" style="stop-color:#183B4E;stop-opacity:0"/>
+    </linearGradient>
+    <!-- Rich gold door - clearly not orange -->
+    <linearGradient id="doorGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E8C76B"/>
+      <stop offset="40%" style="stop-color:#DDA853"/>
+      <stop offset="100%" style="stop-color:#B8860B"/>
+    </linearGradient>
+    <!-- Neutral background - solid so it doesn't blend into blue hero -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#F0F0ED"/>
+      <stop offset="100%" style="stop-color:#E5E6E2"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Solid neutral background - clearly separate from blue header -->
+  <rect width="600" height="400" fill="url(#bgGradient)" rx="8"/>
+  <rect width="600" height="400" fill="none" stroke="#D8D9D4" stroke-width="1" rx="8"/>
+
+  <!-- Ground - grey only, no green -->
+  <rect x="0" y="316" width="600" height="84" fill="#D8D9D4" rx="0 0 8 8"/>
+  <rect x="258" y="296" width="84" height="104" fill="#C8C9C4" rx="4"/>
+  <rect x="268" y="306" width="64" height="84" fill="#DCDDD9" rx="2"/>
+
+  <text x="300" y="366" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="14" font-weight="600" fill="#183B4E" text-anchor="middle">Hostel</text>
+
+  <g filter="url(#buildingShadow)">
+    <!-- Main facade - warm cream/ivory -->
+    <rect x="145" y="178" width="310" height="142" fill="url(#wallGradient)" stroke="#183B4E" stroke-width="1.5"/>
+    <rect x="145" y="178" width="75" height="142" fill="#E8E4D5" stroke="#183B4E" stroke-width="1"/>
+
+    <polygon points="125,178 300,72 475,178" fill="url(#roofGradient)" stroke="#183B4E" stroke-width="1.5"/>
+    <polygon points="135,176 300,80 465,176" fill="url(#roofShadow)" opacity="0.5"/>
+
+    <!-- Gold door -->
+    <rect x="268" y="228" width="64" height="92" fill="url(#doorGradient)" stroke="#183B4E" stroke-width="1.5" rx="2"/>
+    <rect x="276" y="236" width="48" height="76" fill="#183B4E" opacity="0.1" rx="1"/>
+    <circle cx="318" cy="272" r="4" fill="#183B4E"/>
+
+    <!-- Windows - cream, dark blue frames -->
+    <rect x="162" y="192" width="48" height="48" fill="#F3F3E0" stroke="#183B4E" stroke-width="1.5"/>
+    <line x1="186" y1="192" x2="186" y2="240" stroke="#27548A" stroke-width="1"/>
+    <line x1="162" y1="216" x2="210" y2="216" stroke="#27548A" stroke-width="1"/>
+    <rect x="162" y="252" width="48" height="48" fill="#F3F3E0" stroke="#183B4E" stroke-width="1.5"/>
+    <line x1="186" y1="252" x2="186" y2="300" stroke="#27548A" stroke-width="1"/>
+    <line x1="162" y1="276" x2="210" y2="276" stroke="#27548A" stroke-width="1"/>
+
+    <rect x="390" y="192" width="48" height="48" fill="#F3F3E0" stroke="#183B4E" stroke-width="1.5"/>
+    <line x1="414" y1="192" x2="414" y2="240" stroke="#27548A" stroke-width="1"/>
+    <line x1="390" y1="216" x2="438" y2="216" stroke="#27548A" stroke-width="1"/>
+    <rect x="390" y="252" width="48" height="48" fill="#F3F3E0" stroke="#183B4E" stroke-width="1.5"/>
+    <line x1="414" y1="252" x2="414" y2="300" stroke="#27548A" stroke-width="1"/>
+    <line x1="390" y1="276" x2="438" y2="276" stroke="#27548A" stroke-width="1"/>
+
+    <rect x="288" y="192" width="32" height="28" fill="#F3F3E0" stroke="#183B4E" stroke-width="1.5"/>
+    <line x1="304" y1="192" x2="304" y2="220" stroke="#27548A" stroke-width="1"/>
+
+    <rect x="378" y="108" width="28" height="70" fill="#27548A" stroke="#183B4E" stroke-width="1"/>
+    <rect x="373" y="98" width="38" height="14" fill="#183B4E" rx="1"/>
+  </g>
+</svg>

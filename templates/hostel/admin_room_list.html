@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block title %}Room Management - Hostel Management System{% endblock %}
+
+{% block extra_css %}
+<style>
+    .admin-page-title { color: #1B263B; font-weight: 700; border-bottom: 3px solid #4A69BD; padding-bottom: 0.5rem; display: inline-block; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Room Management</li>
+            </ol>
+        </nav>
+        <h2 class="admin-page-title mb-4"><i class="fas fa-door-open me-2"></i>Room Management</h2>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Room List</h5>
+                <div>
+                    <a href="{% url 'admin_room_create' %}" class="btn btn-sm btn-primary">
+                        <i class="fas fa-plus me-1"></i>Add New Room
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                {% if rooms %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Room Number</th>
+                                    <th>Type</th>
+                                    <th>Capacity</th>
+                                    <th>Availability</th>
+                                    <th>Occupants</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for room in rooms %}
+                                    <tr>
+                                        <td>{{ room.room_number }}</td>
+                                        <td>{{ room.get_room_type_display }}</td>
+                                        <td>{{ room.capacity }}</td>
+                                        <td>
+                                            {% if room.is_available %}
+                                                <span class="badge bg-success">Available</span>
+                                            {% else %}
+                                                <span class="badge bg-danger">Occupied</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% with occupants=room.student_set.all %}
+                                                {% if occupants %}
+                                                    {% for student in occupants %}
+                                                        {{ student.user.first_name }} {{ student.user.last_name }}{% if not forloop.last %}, {% endif %}
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <span class="text-muted">None</span>
+                                                {% endif %}
+                                            {% endwith %}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'admin_room_edit' room.id %}" class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        <p>No rooms available in the system.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="d-flex justify-content-between">
+            <a href="{% url 'dashboard' %}" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %} 

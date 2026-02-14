@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block title %}Dashboard - Hostel Management System{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="mb-4"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</h2>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-user me-2"></i>Student Information</h5>
+            </div>
+            <div class="card-body">
+                {% if student %}
+                    <div class="text-center mb-4">
+                        <div class="stat-icon">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <h4>{{ student.user.first_name }} {{ student.user.last_name }}</h4>
+                        <p class="text-muted">{{ student.roll_number }}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span><i class="fas fa-envelope me-2"></i>Email:</span>
+                            <span>{{ student.user.email }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span><i class="fas fa-phone me-2"></i>Phone:</span>
+                            <span>{{ student.phone_number }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span><i class="fas fa-venus-mars me-2"></i>Gender:</span>
+                            <span>{{ student.get_gender_display }}</span>
+                        </li>
+                    </ul>
+                    <div class="d-grid gap-2 mt-3">
+                        <a href="{% url 'profile' %}" class="btn btn-outline-primary">
+                            <i class="fas fa-edit me-2"></i>Edit Profile
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="alert alert-warning">
+                        <p>Student profile not found. Please contact administrator.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-bed me-2"></i>Room Information</h5>
+            </div>
+            <div class="card-body">
+                {% if room %}
+                    <div class="text-center mb-4">
+                        <div class="stat-icon">
+                            <i class="fas fa-door-open"></i>
+                        </div>
+                        <h4>Room {{ room.room_number }}</h4>
+                        <p class="text-muted">{{ room.get_room_type_display }}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span><i class="fas fa-users me-2"></i>Capacity:</span>
+                            <span>{{ room.capacity }}</span>
+                        </li>
+                    </ul>
+                    <div class="d-grid gap-2 mt-3">
+                        <a href="{% url 'room_detail' room.id %}" class="btn btn-outline-primary">
+                            <i class="fas fa-info-circle me-2"></i>Room Details
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="text-center mb-4">
+                        <div class="stat-icon text-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h4>No Room Assigned</h4>
+                        <p class="text-muted">You haven't been assigned a room yet.</p>
+                    </div>
+                    <div class="d-grid gap-2 mt-3">
+                        <a href="{% url 'room_assignment' %}" class="btn btn-primary">
+                            <i class="fas fa-bed me-2"></i>Request Room
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-clipboard-check me-2"></i>Attendance</h5>
+            </div>
+            <div class="card-body">
+                {% if attendance %}
+                    <div class="text-center mb-4">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <h4>Recent Attendance</h4>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        {% for record in attendance %}
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>{{ record.date|date:"M d, Y" }}</span>
+                                {% if record.is_present %}
+                                    <span class="attendance-present"><i class="fas fa-check-circle me-1"></i>Present</span>
+                                {% else %}
+                                    <span class="attendance-absent"><i class="fas fa-times-circle me-1"></i>Absent</span>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="text-center mb-4">
+                        <div class="stat-icon text-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h4>No Attendance Records</h4>
+                        <p class="text-muted">No attendance records found.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-bullhorn me-2"></i>Latest Announcements</h5>
+            </div>
+            <div class="card-body">
+                {% if announcements %}
+                    {% for announcement in announcements %}
+                        <div class="announcement-card p-3 mb-3 bg-light rounded">
+                            <h5>{{ announcement.title }}</h5>
+                            <p class="mb-1">{{ announcement.content }}</p>
+                            <small class="text-muted">Posted by {{ announcement.posted_by.get_full_name }} on {{ announcement.date_posted|date:"F d, Y" }}</small>
+                        </div>
+                    {% endfor %}
+                    <div class="text-center">
+                        <a href="{% url 'announcement_list' %}" class="btn btn-outline-primary">
+                            <i class="fas fa-list me-2"></i>View All Announcements
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        <p>No announcements available at this time.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
